@@ -1,0 +1,6 @@
+Flask
+qrcode
+pillow
+gunicorn
+reportlab
+flask-mail

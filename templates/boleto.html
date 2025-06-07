@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Boleto Electrónico</title>
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-green-50 min-h-screen flex items-center justify-center">
+  <section class="bg-white p-6 rounded-lg shadow-xl text-center w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-4">¡Boleto generado!</h1>
+
+    <p class="text-lg font-semibold">Nombre: {{ nombre }}</p>
+
+    <img src="{{ url_for('static', filename='qr_codes/' + qr_file) }}"
+         alt="Código QR"
+         class="mx-auto my-4 w-48">
+
+    <p class="mb-4 text-gray-700">Tu pase de abordar ya lo tienes en tu correo.</p>
+    <p class="mb-4 text-gray-700">¡Gracias por registrarte!</p>
+
+    <!-- Botón: Descargar QR -->
+    <a href="{{ url_for('descargar_qr', tipo=tipo, persona_id=persona_id) }}"
+       class="inline-block mt-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+       Descargar QR
+    </a>
+
+    <!-- Botón: Ver información registrada -->
+    <a href="{{ url_for('ver_info', tipo=tipo, persona_id=persona_id) }}"
+       class="inline-block mt-2 ml-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+       Ver información
+    </a>
+  </section>
+</body>
+</html>

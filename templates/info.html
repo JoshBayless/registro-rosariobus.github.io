@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Información del {{ 'Alumno' if tipo == 'alumno' else 'Docente' }}</title>
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-50 min-h-screen flex items-center justify-center">
+  <div class="bg-white p-8 rounded shadow-lg w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-4 text-center">Información del {{ 'Alumno' if tipo == 'alumno' else 'Docente' }}</h1>
+
+    <p><span class="font-semibold">Nombre:</span> {{ persona[1] or 'N/A' }}</p>
+    <p><span class="font-semibold">Correo:</span> {{ persona[2] or 'N/A' }}</p>
+    <p><span class="font-semibold">Carrera:</span> {{ persona[3] or 'N/A' }}</p>
+    {% if tipo == 'alumno' %}
+      <p><span class="font-semibold">Matrícula:</span> {{ persona[4] or 'N/A' }}</p>
+    {% else %}
+      <p><span class="font-semibold">Núm. Trabajador:</span> {{ persona[4] or 'N/A' }}</p>
+    {% endif %}
+
+    <div class="mt-4 text-green-600 font-medium">Entrada registrada con éxito.</div>
+
+    <section class="mt-6">
+      <h2 class="text-lg font-semibold mb-2">Historial de accesos:</h2>
+      <ul class="list-disc pl-5 text-sm text-gray-700">
+        {% if historial %}
+          {% for acceso in historial %}
+            <li>{{ acceso }}</li>
+          {% endfor %}
+        {% else %}
+          <li>No hay accesos registrados.</li>
+        {% endif %}
+      </ul>
+    </section>
+
+    <!-- Botones de navegación -->
+    <div class="mt-6 flex flex-col sm:flex-row justify-center gap-3">
+      <a href="{{ url_for('inicio') }}"
+         class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition text-center">
+         Volver al inicio
+      </a>
+
+      <a href="{{ url_for('ver_info', tipo=tipo, persona_id=persona[0]) }}"
+         class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition text-center">
+         Ver información nuevamente
+      </a>
+    </div>
+  </div>
+</body>
+</html>

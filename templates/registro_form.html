@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro</title>
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<main class="bg-cover bg-center min-h-screen flex items-center justify-center"
+      style="background-image: url('{{ url_for('static', filename='UNRC.jpg') }}');">
+  <section class="bg-white/80 backdrop-blur-sm shadow-lg p-8 rounded-lg w-full max-w-md">
+    <h2 class="text-xl font-bold mb-4 text-center">Formulario de Registro</h2>
+
+    <form action="/registrar" method="post" class="space-y-4">
+      <!-- Ocultos: tipo y matrícula/número de trabajador -->
+      <input type="hidden" name="tipo" value="{{ tipo }}">
+      <input type="hidden" name="identificador" value="{{ identificador }}">
+
+      <div>
+        <label class="block font-semibold">Nombre</label>
+        <input type="text" name="nombre" required class="w-full border px-3 py-2 rounded">
+      </div>
+
+      <div>
+        <label class="block font-semibold">Correo</label>
+        <input type="email" name="correo" required class="w-full border px-3 py-2 rounded">
+      </div>
+
+      <div>
+        <label class="block font-semibold">Carrera</label>
+        <select name="carrera" required class="w-full border px-3 py-2 rounded">
+          <option value="" disabled selected>Selecciona una opción</option>
+          <option value="LCDN">LCDN</option>
+          <option value="LCFI">LCFI</option>
+          <option value="LDCR">LDCR</option>
+          <option value="LHNM">LHNM</option>
+          <option value="LRIN">LRIN</option>
+        </select>
+      </div>
+
+      <button type="submit"
+              class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+        Generar Boleto
+      </button>
+    </form>
+  </section>
+</main>
+</body>
+</html>
