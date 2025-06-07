@@ -91,7 +91,7 @@ def registrar():
     qrcode.make(qr_url).save(qr_path)
 
     # Enviar correo con QR
-    msg = Message('Tu código QR de acceso', sender=app.config['MAIL_USERNAME'], recipients=[correo])
+    msg = Message('Boleto electrónico - RosarioBus', sender=app.config['MAIL_USERNAME'], recipients=[correo])
 
     # Versión en texto plano (respaldo)
     msg.body = (
