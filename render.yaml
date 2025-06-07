@@ -1,7 +1,9 @@
 services:
   - type: web
-    name: boleto-qr
-    env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn app:app"
-    plan: free
+    name: rosariobus-flask-app
+    runtime: python
+    buildCommand: ""
+    startCommand: python app.py
+    envVars:
+      - key: FLASK_ENV
+        value: production
