@@ -94,9 +94,8 @@ def registrar():
 
     # Texto con formato HTML
     msg.html = f"""
-    <p>Hola {nombre}./p>
-    <p>Adjunto encontrarás el código QR que es tu pase de abordar al <strong>RosarioBus</strong>.</p>
-    <p>No lo compartas con nadie, recuerda que es único e intransferible.</p>
+    <p>Hola {nombre}.</p>
+    <p>Adjunto encontrarás el código QR que es tu pase de abordar al <strong>RosarioBus</strong>. No lo compartas con nadie, recuerda que es único e intransferible.</p>
     <p><em><strong>¡Libres, dignos y humanos, somos Rosario Castellanos!</strong></em></p>
     """
     # Adjuntar QR
