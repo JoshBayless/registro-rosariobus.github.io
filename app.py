@@ -1,3 +1,4 @@
+from zoneinfo import ZoneInfo
 from flask import Flask, render_template, request, url_for, send_file, redirect, flash
 from flask_mail import Mail, Message
 import qrcode
@@ -90,17 +91,27 @@ def registrar():
     qrcode.make(qr_url).save(qr_path)
 
     # Enviar correo con QR
-    msg = Message('Boleto electrónico - RosarioBus', sender=app.config['MAIL_USERNAME'], recipients=[correo])
+    msg = Message('Tu código QR de acceso', sender=app.config['MAIL_USERNAME'], recipients=[correo])
 
-    # Texto con formato HTML
+    # Versión en texto plano (respaldo)
+    msg.body = (
+    f"Hola {nombre}.\n\n"
+    "Adjunto encontrarás un código QR que es tu pase de abordar a una de las unidades del RosarioBus. No lo compartas con nadie, recuerda que es único e intransferible.\n\n\n"
+    "¡Libres, dignos y humanos, somos Rosario Castellanos!"
+    )
+
+    # Versión HTML con estilo
     msg.html = f"""
     <p>Hola {nombre}.</p>
-    <p>Adjunto encontrarás el código QR que es tu pase de abordar a una de las unidades del <strong>RosarioBus</strong>. No lo compartas con nadie, recuerda que es único e intransferible.</p>
+
+    <p>Adjunto encontrarás un código QR que es tu pase de abordar al <strong>RosarioBus</strong>. No lo compartas con nadie, recuerda que es único e intransferible.</p>
     <p><em><strong>¡Libres, dignos y humanos, somos Rosario Castellanos!</strong></em></p>
     """
-    # Adjuntar QR
+
+    # Adjuntar QR como imagen
     with open(qr_path, 'rb') as qr_file:
         msg.attach(qr_filename, 'image/png', qr_file.read())
+
 
     try:
         mail.send(msg)
@@ -120,8 +131,9 @@ def ver_info(tipo, persona_id):
         persona = cursor.fetchone()
 
         if persona:
+            now_local = datetime.now(ZoneInfo("America/Mexico_City"))
             cursor.execute('INSERT INTO accesos (tipo, persona_id, timestamp) VALUES (?, ?, ?)',
-                           (tipo, persona_id, datetime.now().isoformat()))
+               (tipo, persona_id, now_local.isoformat()))
             cursor.execute('SELECT timestamp FROM accesos WHERE tipo = ? AND persona_id = ? ORDER BY timestamp DESC',
                            (tipo, persona_id))
             historial = [datetime.fromisoformat(row[0]).strftime('%d/%m/%Y %H:%M:%S') for row in cursor.fetchall()]
